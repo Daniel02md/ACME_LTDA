@@ -73,7 +73,43 @@ class FuncionarioController:
             return Response().error.does_not_exist("ID")
         
         
+    def update(self, id=None, cpf=None, nome=None, cargo=None, salario=None):
+        if not id:
+            return Response().error.null_value("ID")
+        
+        if not self.model_funcionario.get_by_ID(id=id):
+            return Response().error.does_not_exist("ID")
+        
+        if cpf:
+            cpf = CPF(cpf).digit
+
+            if not CPF(cpf).validate():
+                return Response().error.invalid_values("cpf")
+            
+            if self.model_funcionario.already_cpf_exists(cpf):
+                cpf = None
+
+        if salario:
+            try:
+                float(salario)
+            except:
+                return Response().error.invalid_values("salario")
+            
+        response = {}
+        for key, value in dict(cpf=cpf, nome=nome, cargo=cargo, salario=salario).items():
+            if value:
+                response[key.upper()] = value
+
+        self.model_funcionario.update(id=id, **response)
+        return Response().success.updated()
 
 
-    def delete(self, id) -> dict:
-        pass
+    def delete(self, id=None) -> Response:
+        if not id:
+            return Response().error.null_value("ID")
+        
+        if self.model_funcionario.get_by_ID(id=id):
+            if self.model_funcionario.delete(id=id):
+                return Response().success.deleted()
+        else:
+            return Response().error.does_not_exist("ID")

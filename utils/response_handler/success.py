@@ -24,7 +24,22 @@ class Success:
         self.__RESPONSE_BODY["success"]["code"] = self.code
         return self
     
-
+    def updated(self):
+        self.__RESPONSE_BODY["success"].clear()
+        self.code = 200
+        self.message = f"Successfully updated"
+        self.__RESPONSE_BODY["success"]["message"] = self.message
+        self.__RESPONSE_BODY["success"]["code"] = self.code
+        return self
+    
+    def deleted(self):
+        self.__RESPONSE_BODY["success"].clear()
+        self.code = 200
+        self.message = f"Successfully deleted"
+        self.__RESPONSE_BODY["success"]["message"] = self.message
+        self.__RESPONSE_BODY["success"]["code"] = self.code
+        return self
+    
     def results(self, *args):
         self.code = 200
         self.__RESPONSE_BODY["success"].clear()

@@ -72,5 +72,30 @@ class Funcionario(db.Model):
                 return False
             
 
+
+    def update (self, id, **kwargs) -> bool:
+        try: 
+            with app.app_context():
+                db.session.execute(
+                    update(Funcionario)
+                    .where(Funcionario.ID == id)
+                    .values(**kwargs)
+                )
+                db.session.commit()
+            return True
+        
+        except Exception as e:
+            print(e)
+            return False
+
     def delete(self, id) -> bool:
-        pass
+        try:
+            with app.app_context():
+                db.session.execute(
+                    delete(Funcionario).where(Funcionario.ID == id)
+                )
+                db.session.commit()
+                return True
+        except Exception as e:
+            print(e)
+            return False

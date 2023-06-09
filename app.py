@@ -21,11 +21,13 @@ def create_app(*config_name) -> Flask:
         return jsonify(response.response), response.code
 
 
+
     @app.route('/funcionario', methods=["GET"])
     @cross_origin(origin='*',headers=['Content-Type','Authorization'])
     def get_funcionario_by_alpha():
         results = FuncionarioController().get_alpha_order()
         return jsonify(results.response), results.code
+
 
 
     @app.route('/funcionario/<int:id>', methods=["GET"])
@@ -38,5 +40,15 @@ def create_app(*config_name) -> Flask:
             return jsonify(funcionario.response), funcionario.code
 
     
+    @app.route('/funcionario/<int:id>', methods=["POST"])
+    def update_funcionario(id=None):
+        response = FuncionarioController().update(id=id, **request.form.to_dict())
+        return jsonify(response.response), response.code 
+    
+
+    @app.route('/funcionario/<int:id>', methods=["DELETE"])
+    def delete_funcionario(id=None):
+        response = FuncionarioController().delete(id=id)
+        return jsonify(response.response), response.code
     
     return app
