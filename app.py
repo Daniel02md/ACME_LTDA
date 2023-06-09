@@ -41,12 +41,14 @@ def create_app(*config_name) -> Flask:
 
     
     @app.route('/funcionario/<int:id>', methods=["POST"])
+    @cross_origin(origin='*',headers=['Content-Type','Authorization'])
     def update_funcionario(id=None):
         response = FuncionarioController().update(id=id, **request.form.to_dict())
         return jsonify(response.response), response.code 
     
 
     @app.route('/funcionario/<int:id>', methods=["DELETE"])
+    @cross_origin(origin='*',headers=['Content-Type','Authorization'])
     def delete_funcionario(id=None):
         response = FuncionarioController().delete(id=id)
         return jsonify(response.response), response.code
