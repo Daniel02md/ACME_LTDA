@@ -40,21 +40,21 @@ mysql+driver://user+password@host:port/DATABASE_NAME
 #### Instale as dependências do projeto executando o seguinte comando:
 
 ```
-python -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
 ### Passo 3: Faça as migrações para o banco de dados
 
 #### Comandos para executar uma migração:
 ```
-flask --app migrate.py upgrade
+flask --app migrate.py alembic upgrade
 ```
 
 ### Passo 4: Executar a Aplicação
 
 - Após a conclusão da instalação das dependências, execute o seguinte comando para iniciar a aplicação:
 ```
-python run.py
+python3 run.py
 ```
 
 ## API Rest - Endpoints
